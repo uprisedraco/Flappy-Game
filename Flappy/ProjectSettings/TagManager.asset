@@ -3,7 +3,10 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - Ground
+  - Column
+  - Pipe
   layers:
   - Default
   - TransparentFX
@@ -40,4 +43,19 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Background
+    uniqueID: 2447664277
+    locked: 0
+  - name: Midground
+    uniqueID: 667008087
+    locked: 0
+  - name: Bird
+    uniqueID: 2603229311
+    locked: 0
+  - name: Foreground
+    uniqueID: 4011412433
+    locked: 0
+  - name: Canvas
+    uniqueID: 1165322507
     locked: 0
