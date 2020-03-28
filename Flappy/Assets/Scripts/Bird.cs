@@ -22,6 +22,12 @@ public class Bird : MonoBehaviour
     [SerializeField]
     private Animator getReadyAnim;
 
+    [SerializeField]
+    private Animator hitEffect;
+
+    [SerializeField]
+    private Animator cameraAnim;
+
     private SpriteRenderer sr;
 
     private Rigidbody2D rb;
@@ -76,6 +82,7 @@ public class Bird : MonoBehaviour
     {
         rb.velocity = Vector2.zero;
         rb.velocity = new Vector2(rb.velocity.x, speed);
+        AudioManager.audiomanager.Play("flap");
     }
 
     void BirdRotation()
@@ -108,13 +115,18 @@ public class Bird : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.CompareTag("Column"))
+        if(GameManager.gameOver == false)
         {
-            score.Scored();
-        }
-        else if (collision.CompareTag("Pipe"))
-        {
-            gameManager.GameOver();
+            if (collision.CompareTag("Column"))
+            {
+                AudioManager.audiomanager.Play("point");
+                score.Scored();
+            }
+            else if (collision.CompareTag("Pipe"))
+            {
+                BirdDieEffect();
+                gameManager.GameOver();
+            }
         }
     }
 
@@ -124,6 +136,7 @@ public class Bird : MonoBehaviour
         {
             if(GameManager.gameOver == false)
             {
+                BirdDieEffect();
                 gameManager.GameOver();
                 GameOver();
             }
@@ -132,6 +145,13 @@ public class Bird : MonoBehaviour
                 GameOver();
             }
         }
+    }
+
+    void BirdDieEffect()
+    {
+        AudioManager.audiomanager.Play("hit");
+        hitEffect.SetTrigger("hit");
+        cameraAnim.SetTrigger("shake");
     }
 
     void GameOver()

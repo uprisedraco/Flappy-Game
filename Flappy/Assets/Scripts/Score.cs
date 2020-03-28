@@ -29,11 +29,16 @@ public class Score : MonoBehaviour
         panelHighScore.text = highScore.ToString();
     }
 
+    public int GetScore()
+    {
+        return score;
+    }
+
     public void Scored()
     {
         score++;
         textScore.text = score.ToString();
-        panelScore.text = score.ToString();
+        //panelScore.text = score.ToString();
 
         if(score > highScore)
         {

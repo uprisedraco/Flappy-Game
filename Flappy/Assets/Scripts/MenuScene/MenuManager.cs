@@ -20,6 +20,7 @@ public class MenuManager : MonoBehaviour
 
     public void OnPlayButtonPressed()
     {
+        AudioManager.audiomanager.Play("transition");
         //SceneManager.LoadScene("Game");
         blackFade.SetTrigger("fadeIn");
     }
