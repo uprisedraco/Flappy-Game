@@ -13,6 +13,15 @@ public class Bird : MonoBehaviour
     [SerializeField]
     private Sprite birdDied;
 
+    [SerializeField]
+    private ColumnSpawner columnSpawner;
+
+    [SerializeField]
+    private Animator birdParentAnim;
+
+    [SerializeField]
+    private Animator getReadyAnim;
+
     private SpriteRenderer sr;
 
     private Rigidbody2D rb;
@@ -33,33 +42,63 @@ public class Bird : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+
+        rb.gravityScale = 0;
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0) && GameManager.gameOver == false)
+        if (Input.GetMouseButtonDown(0) && GameManager.gameOver == false && GameManager.gameIsPaused == false)
         {
-            rb.velocity = Vector2.zero;
-            rb.velocity = new Vector2(rb.velocity.x, speed);
+            if(GameManager.gameHasStarted == false)
+            {
+                rb.gravityScale = 0.8f;
+                birdParentAnim.enabled = false;
+                Flap();
+                getReadyAnim.SetTrigger("fadeOut");
+            }
+            else
+            {
+                Flap();
+            }
         }
 
         BirdRotation();
+    }
+
+    public void OnGetReadyAnimFinished()
+    {
+        columnSpawner.InstantiateColumn();
+        gameManager.GameHasStarted();
+    }
+
+    void Flap()
+    {
+        rb.velocity = Vector2.zero;
+        rb.velocity = new Vector2(rb.velocity.x, speed);
     }
 
     void BirdRotation()
     {
         if (rb.velocity.y > 0)
         {
+            rb.gravityScale = 0.8f;
+
             if (angle <= maxAngle)
             {
                 angle += 4;
             }
         }
-        else if (rb.velocity.y < -1.3f)
+        else if (rb.velocity.y < 0)
         {
-            if (angle >= minAngle)
+            rb.gravityScale = 0.7f;
+
+            if (rb.velocity.y < -1.3f)
             {
-                angle -= 3;
+                if (angle >= minAngle)
+                {
+                    angle -= 3;
+                }
             }
         }
 

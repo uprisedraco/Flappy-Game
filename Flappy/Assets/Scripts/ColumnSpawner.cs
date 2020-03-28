@@ -21,12 +21,12 @@ public class ColumnSpawner : MonoBehaviour
 
     void Start()
     {
-        InstantiateColumn();
+        //InstantiateColumn();
     }
 
     void Update()
     {
-        if(GameManager.gameOver == false)
+        if(GameManager.gameOver == false && GameManager.gameHasStarted == true)
         {
             timer += Time.deltaTime;
 
@@ -38,7 +38,7 @@ public class ColumnSpawner : MonoBehaviour
         } 
     }
 
-    void InstantiateColumn()
+    public void InstantiateColumn()
     {
         randY = Random.Range(minY, maxY);
         GameObject newColumn = Instantiate(column);
