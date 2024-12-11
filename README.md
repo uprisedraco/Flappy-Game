@@ -1,4 +1,4 @@
 # Flappy-Game
-Игра в стиле Flappy Bird.
+Flappy Bird style game.
 
-Взлететь - ЛКМ.
+Fly up - Left Mouse Button (LMB).
